@@ -3,6 +3,7 @@ package com.smartcareer.config;
 import com.smartcareer.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,10 +39,11 @@ public class SecurityConfig {
                                 "/style.css",
                                 "/css/**",
                                 "/js/**",
+                                "/api/chat",
                                 "/api/auth/**",
                                 "/quiz.html",
                                 "/api/auth/register",
-                                "/api/chatgpt/**",  // <-- yahan /api/chatgpt/** poore chatgpt ke liye allow karo
+                                "/api/chatgpt/**",
                                 "/favicon.ico",
                                 "/software-development.html",
                                 "/Mechanical_Engineering.html",
@@ -49,8 +51,10 @@ public class SecurityConfig {
                                 "/Data_Science.html",
                                 "/solve.html",
                                 "/UI_UX_Design.html",
-                                "/Healthcare.html"
+                                "/Healthcare.html",
+                                "/error"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // for CORS preflight
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -60,10 +64,5 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
     }
 }

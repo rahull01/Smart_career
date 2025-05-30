@@ -15,6 +15,8 @@ public class GenerateQuestionsController {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
+    private final String apiKey = System.getenv("OPENAI_API_KEY");
+
     public GenerateQuestionsController(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
@@ -30,7 +32,7 @@ public class GenerateQuestionsController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setBearerAuth("open_api_key"); // replace with your real key
+            headers.setBearerAuth(apiKey); // replace with your real key
 
             Map<String, Object> message = new HashMap<>();
             message.put("role", "user");
