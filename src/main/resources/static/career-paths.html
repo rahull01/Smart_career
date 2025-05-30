@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Career Paths | Smart Career Navigator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+          margin: 0;
+          margin-top: -20px;
+          padding: 0;
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+          color: white;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .container {
+          width: 95%;
+          max-width: 1200px;
+          padding: 40px 20px;
+        }
+
+        .back-btn {
+          text-decoration: none;
+          background: #00ffff;
+          color: #000;
+          padding: 10px 18px;
+          border-radius: 8px;
+          font-weight: 600;
+          display: inline-block;
+          margin-bottom: 30px;
+          transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+          background: #00cccc;
+        }
+
+        h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+
+
+  margin-top: -80px;
+}
+
+
+         .career-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fixed 3 columns */
+  gap: 25px;
+}
+
+          @media (max-width: 768px) {
+  .career-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .career-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+        .career-card {
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 15px;
+          padding: 20px;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+        }
+
+        .career-card:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px #00ffff88;
+        }
+
+        .career-card h3 {
+          margin-top: 0;
+          color: #00ffff;
+          font-size: 1.4rem;
+        }
+
+        .career-card p {
+          color: #ddd;
+          font-size: 0.95rem;
+          margin-bottom: 15px;
+        }
+
+        .learn-more {
+          text-decoration: none;
+          color: #00ffcc;
+          font-weight: 600;
+        }
+
+        .learn-more:hover {
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <h1>🚀 Explore Career Paths</h1>
+
+    <div class="career-list">
+        <div class="career-card">
+            <h3>💻 Software Development</h3>
+            <p>Build websites, mobile apps & enterprise software using code & logic.</p>
+            <a href="software-development.html" class="learn-more">Learn More →</a>
+        </div>
+        <div class="career-card">
+            <h3>📊 Data Science</h3>
+            <p>Work with big data, machine learning, and AI to solve real-world problems.</p>
+            <a href="Data_Science.html" class="learn-more">Learn More →</a>
+        </div>
+        <div class="career-card">
+            <h3>📈 Digital Marketing</h3>
+            <p>Promote brands via social media, SEO, content & ads to grow business online.</p>
+            <a href="Digital_Marketing.html" class="learn-more">Learn More →</a>
+        </div>
+        <div class="career-card">
+            <h3>🎨 UI/UX Design</h3>
+            <p>Design user-friendly interfaces, websites, and apps with great visuals.</p>
+            <a href="UI_UX_Design.html" class="learn-more">Learn More →</a>
+        </div>
+        <div class="career-card">
+            <h3>🩺 Healthcare</h3>
+            <p>Become a doctor, nurse, therapist or work in health tech and management.</p>
+            <a href="Healthcare.html" class="learn-more">Learn More →</a>
+        </div>
+        <div class="career-card">
+            <h3>🛠️ Mechanical Engineering</h3>
+            <p>Design machines, cars, robotics, and work in core engineering sectors.</p>
+            <a href="Mechanical_Engineering.html" class="learn-more">Learn More →</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

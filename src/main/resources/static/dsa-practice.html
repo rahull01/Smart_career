@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DSA Practice | SmartCareerNavigator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Poppins', sans-serif;
+          display: flex;
+          background: #f7f9fc;
+          color: #333;
+        }
+
+        .sidebar {
+          width: 260px;
+          background: linear-gradient(to bottom, #007acc, #005a99);
+          color: #fff;
+          height: 100vh;
+          padding: 30px 20px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          overflow-y: auto;
+          box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar h2 {
+          font-size: 1.7rem;
+          margin-bottom: 20px;
+          border-bottom: 2px solid #fff;
+          padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+          list-style: none;
+          margin-top: 20px;
+        }
+
+        .sidebar ul li {
+          padding: 10px 15px;
+          margin-bottom: 10px;
+          border-radius: 6px;
+          cursor: pointer;
+          background-color: rgba(255, 255, 255, 0.1);
+          transition: background 0.3s, transform 0.2s;
+        }
+
+        .sidebar ul li.selected {
+          background-color: rgba(255, 255, 255, 0.4);
+          font-weight: 600;
+          transform: translateX(5px);
+        }
+
+        .sidebar ul li:hover {
+          background-color: rgba(255, 255, 255, 0.25);
+          transform: translateX(5px);
+        }
+
+        .main-content {
+          margin-left: 280px;
+          padding: 40px;
+          width: 100%;
+        }
+
+        .back-btn {
+          text-decoration: none;
+          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 8px;
+          font-weight: 600;
+          display: inline-block;
+          margin-bottom: 30px;
+          transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+          background: linear-gradient(45deg, #009edf, #005fa3);
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          color: #005fa3;
+          margin-bottom: 10px;
+        }
+
+        .description {
+          font-size: 1.1rem;
+          color: #555;
+          margin-bottom: 30px;
+        }
+
+        .filters {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 30px;
+        }
+
+        select {
+          padding: 12px;
+          font-size: 1rem;
+          border: 2px solid #ccc;
+          border-radius: 8px;
+          background: #fff;
+          transition: border 0.3s;
+        }
+
+        select:focus {
+          border-color: #007acc;
+          outline: none;
+        }
+
+        .btn {
+          background: linear-gradient(45deg, #00c6ff, #0072ff);
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .question-card {
+          background: #ffffff;
+          border-left: 5px solid #007acc;
+          border-radius: 10px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+          padding: 20px;
+          margin-bottom: 25px;
+          transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+          transform: scale(1.02);
+        }
+
+        .question-card h3 {
+          color: #333;
+          margin-bottom: 10px;
+        }
+
+        .solve-btn {
+          margin-top: 10px;
+          background: linear-gradient(to right, #00d2ff, #3a7bd5);
+          color: white;
+          padding: 10px 16px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+        }
+
+        .solve-btn:hover {
+          background: linear-gradient(to right, #00a8cc, #2a62b7);
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>📘 DSA Topics</h2>
+    <ul id="topicList">
+        <li onclick="selectTopic('Arrays', this)">Arrays</li>
+        <li onclick="selectTopic('Strings', this)">Strings</li>
+        <li onclick="selectTopic('Linked List', this)">Linked List</li>
+        <li onclick="selectTopic('Stacks', this)">Stacks</li>
+        <li onclick="selectTopic('Queues', this)">Queues</li>
+        <li onclick="selectTopic('Trees', this)">Trees</li>
+        <li onclick="selectTopic('Graphs', this)">Graphs</li>
+        <li onclick="selectTopic('Hashing', this)">Hashing</li>
+        <li onclick="selectTopic('Sorting', this)">Sorting</li>
+        <li onclick="selectTopic('Searching', this)">Searching</li>
+        <li onclick="selectTopic('Recursion', this)">Recursion</li>
+        <li onclick="selectTopic('Backtracking', this)">Backtracking</li>
+        <li onclick="selectTopic('Dynamic Programming', this)">Dynamic Programming</li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+
+    <h1>💡 DSA Practice</h1>
+    <p class="description">
+        Practice topic-wise DSA problems with different difficulty levels. Learn, code, and master competitive programming skills.
+    </p>
+
+    <div class="filters">
+        <select id="difficultySelect">
+            <option value="">Select Difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <button class="btn" onclick="loadQuestions()">Load Questions</button>
+    </div>
+
+    <div id="questionsContainer">
+        <!-- Questions will be displayed here -->
+    </div>
+</div>
+
+<script>
+    let selectedTopic = 'Arrays'; // default
+    let selectedDifficulty = '';
+
+    function selectTopic(topic, element) {
+        selectedTopic = topic;
+        document.querySelectorAll('#topicList li').forEach(li => li.classList.remove('selected'));
+        element.classList.add('selected');
+        console.log("Selected Topic:", selectedTopic);
+    }
+
+    function escapeQuotes(str) {
+        if (!str) return '';
+        return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+
+    function goToSolvePage(title, content) {
+        localStorage.setItem('solve_title', title);
+        localStorage.setItem('solve_content', content);
+        window.location.href = 'solve.html';
+    }
+
+    function loadQuestions() {
+        const diffSelect = document.getElementById('difficultySelect');
+        selectedDifficulty = diffSelect.value;
+
+        if (!selectedTopic) {
+            alert('Please select a topic');
+            return;
+        }
+
+        if (!selectedDifficulty) {
+            alert('Please select a difficulty');
+            return;
+        }
+
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '<p>Loading questions...</p>';
+
+        fetch("http://localhost:8080/api/chatgpt/generate-questions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                topic: selectedTopic,
+                difficulty: selectedDifficulty
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            container.innerHTML = '';
+
+            if (Object.keys(data).length === 0) {
+                container.innerHTML = '<p>No questions found for this selection.</p>';
+                return;
+            }
+
+            Object.entries(data).forEach(([key, question]) => {
+                const div = document.createElement("div");
+                div.classList.add('question-card');
+                div.innerHTML = `
+                    <h3>${key}</h3>
+                    <p>${question}</p>
+                    <button class="solve-btn" onclick="goToSolvePage('${escapeQuotes(key)}', '${escapeQuotes(question)}')">Solve Now</button>
+                `;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => {
+            container.innerHTML = `<p style="color:red;">Error loading questions: ${error.message}</p>`;
+            console.error("Error:", error);
+        });
+    }
+
+    // Initialize default selected topic UI
+    document.querySelectorAll('#topicList li').forEach(li => {
+        if (li.textContent === selectedTopic) li.classList.add('selected');
+    });
+
+    if (!solved.includes(title)) {
+  solved.push(title); // ❌ isko hata do yahaan se
+  localStorage.setItem('solvedQuestions', JSON.stringify(solved));
+}
+
+</script>
+
+</body>
+</html>

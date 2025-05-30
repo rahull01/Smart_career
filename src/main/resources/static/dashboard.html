@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Career Navigator - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            min-height: 100vh;
+            display: flex;
+            color: #222;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-radius: 0 20px 20px 0;
+        }
+
+        aside img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #4a90e2;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        aside img:hover {
+            transform: scale(1.1);
+        }
+
+        aside h2 {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #114b5f;
+            text-align: center;
+        }
+
+        nav {
+            width: 100%;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            font-weight: 600;
+            color: #114b5f;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #4a90e2;
+            color: white;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.6);
+        }
+
+        nav a span.icon {
+            font-size: 1.5rem;
+        }
+
+        /* Main content */
+        main {
+            flex-grow: 1;
+            padding: 40px 50px;
+            overflow-y: auto;
+        }
+
+        /* Header with welcome */
+        main header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        main header h1 {
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #114b5f;
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        main header button.logout-btn {
+            background: #f44336;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.5);
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        main header button.logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        /* Dashboard grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 35px 25px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: pointer;
+            color: #114b5f;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.15rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            user-select: none;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(74, 144, 226, 0.6);
+            color: #004e89;
+        }
+
+        .card .icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .icon {
+            color: #004e89;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 50px;
+            user-select: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            aside {
+                width: 70px;
+                padding: 20px 10px;
+            }
+            aside h2 {
+                display: none;
+            }
+            nav a {
+                justify-content: center;
+                padding: 15px 0;
+                margin-bottom: 20px;
+            }
+            nav a span.text {
+                display: none;
+            }
+            main {
+                padding: 30px 20px;
+            }
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 400px) {
+            main header h1 {
+                font-size: 1.6rem;
+            }
+            .card {
+                padding: 25px 15px;
+                font-size: 1rem;
+            }
+            .card .icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<aside>
+    <img src="https://i.pravatar.cc/150?u=rs3696589" alt="User Profile" />
+    <h2 id="sidebarUserName">Rahul Singh</h2>
+    <nav>
+        <a href="career-paths.html" class="active">
+            <span class="icon">🎯</span>
+            <span class="text">Explore Career Paths</span>
+        </a>
+        <a href="quiz.html">
+            <span class="icon">📝</span>
+            <span class="text">Take a Quiz</span>
+        </a>
+        <a href="guidance.html">
+            <span class="icon">💡</span>
+            <span class="text">Get Guidance</span>
+        </a>
+        <a href="dsa-practice.html">
+            <span class="icon">💻</span>
+            <span class="text">DSA Practice</span>
+        </a>
+        <a href="Talk_with_us.html">
+            <span class="icon"> 🗣️</span>
+            <span class="text">Talk With us</span>
+        </a>
+        <a href="resources.html">
+            <span class="icon">📚</span>
+            <span class="text">Resources & Tips</span>
+        </a>
+        <a href="profile.html">
+            <span class="icon">⚙️</span>
+            <span class="text">Profile Settings</span>
+        </a>
+        <a href="notifications.html">
+            <span class="icon">🔔</span>
+            <span class="text">Notifications</span>
+        </a>
+    </nav>
+</aside>
+
+<main>
+    <header>
+        <h1>Welcome back, <span id="welcomeUserName">Rahul Singh</span>!</h1>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+    </header>
+
+    <section class="dashboard-grid">
+        <div class="card" onclick="navigateTo('career-paths.html')">
+            <div class="icon">🎯</div>
+            Explore Career Paths
+        </div>
+        <div class="card" onclick="navigateTo('quiz.html')">
+            <div class="icon">📝</div>
+            Take a Quiz
+        </div>
+        <div class="card" onclick="navigateTo('guidance.html')">
+            <div class="icon">💡</div>
+            Get Personalized Guidance
+        </div>
+        <div class="card" onclick="navigateTo('dsa-practice.html')">
+            <div class="icon">💻</div>
+            DSA Practice
+        </div>
+        <div class="card" onclick="navigateTo('Talk_with_us.html')">
+            <div class="icon"> 🗣️</div>
+            Talk With us
+        </div>
+        <div class="card" onclick="navigateTo('resources.html')">
+            <div class="icon">📚</div>
+            Resources & Tips
+        </div>
+        <div class="card" onclick="navigateTo('profile.html')">
+            <div class="icon">⚙️</div>
+            Profile Settings
+        </div>
+        <div class="card" onclick="navigateTo('notifications.html')">
+            <div class="icon">🔔</div>
+            Notifications
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Smart Career Navigator
+    </footer>
+</main>
+
+<script>
+    // Example: backend se username/email fetch karke localStorage ya DOM me daal sakta hai
+    const userName = localStorage.getItem('userName') || 'Rahul Singh';
+    const userEmail = localStorage.getItem('userEmail') || 'rs3696589@gmail.com';
+
+    document.getElementById('sidebarUserName').textContent = userName;
+    document.getElementById('welcomeUserName').textContent = userName;
+
+    document.querySelector('aside img').src = `https://i.pravatar.cc/150?u=${userEmail}`;
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        // clear localStorage or token and redirect to login page
+        localStorage.clear();
+        window.location.href = 'index.html';
+    });
+
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+</script>
+
+</body>
+</html>
