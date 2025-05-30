@@ -30,7 +30,7 @@ public class GenerateQuestionsController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setBearerAuth("***REMOVED***"); // replace with your real key
+            headers.setBearerAuth("open_api_key"); // replace with your real key
 
             Map<String, Object> message = new HashMap<>();
             message.put("role", "user");
