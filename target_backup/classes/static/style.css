@@ -1,0 +1,68 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: #ffffffee;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1.2px;
+}
+
+input {
+    display: block;
+    margin: 8px 0;
+    padding: 12px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #6b73ff;
+    outline: none;
+    box-shadow: 0 0 8px #6b73ffaa;
+}
+
+button {
+    padding: 12px;
+    background: linear-gradient(90deg, #6b73ff, #000dff);
+    color: white;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    box-shadow: 0 5px 15px rgba(107, 115, 255, 0.6);
+}
+
+button:hover {
+    background: linear-gradient(90deg, #000dff, #6b73ff);
+    box-shadow: 0 8px 20px rgba(0, 13, 255, 0.7);
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: 600;
+    color: #444;
+}
