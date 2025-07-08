@@ -52,4 +52,4 @@ Smart Career Navigator is a full-stack career guidance web application designed 
 
 ## 📫 Contact
 
-Created by Rahul Singh | [LinkedIn](#)
+Created by Rahul Singh | [LinkedIn](https://www.linkedin.com/in/rahuljava/)
