@@ -19,12 +19,9 @@ public class ChatController {
     private final String apiKey;
 
     public ChatController() {
-        // Environment variable se API key load karo
         this.apiKey = System.getenv("OPENAI_API_KEY");
         if (this.apiKey == null || this.apiKey.isEmpty()) {
             System.err.println("ERROR: OPENAI_API_KEY environment variable is not set or empty!");
-            // Optionally, throw RuntimeException to stop app if key is critical
-            // throw new RuntimeException("OPENAI_API_KEY not set");
         }
     }
 

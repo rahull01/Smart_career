@@ -2,194 +2,165 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>DSA Quiz - KBC Style</title>
+    <title>DSA Quiz - SMART CAREER NAVIGATOR</title>
+
     <style>
         body {
-          font-family: 'Arial', sans-serif;
-          background: radial-gradient(circle at center, #0f0f3f, #000020);
-          color: #fff;
-          text-align: center;
-          margin: 0;
-          padding: 20px;
+            background: #000428;
+            background: linear-gradient(to bottom, #000428, #004e92);
+            font-family: Arial;
+            color: white;
+            padding: 30px;
+            text-align: center;
         }
 
-        .quiz-container {
-          max-width: 700px;
-          margin: auto;
-          background: #10103f;
-          border: 3px solid #00ffcc;
-          border-radius: 20px;
-          padding: 30px;
-          box-shadow: 0 0 25px #00ffff;
+        .question-box {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0ff;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.3);
+            box-shadow: 0px 0px 20px cyan;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        h1 {
-          margin-bottom: 30px;
-          color: #00ffff;
+        .option-btn {
+            width: 80%;
+            padding: 12px;
+            margin: 10px auto;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background: #012b70;
+            color: white;
+            transition: 0.2s;
         }
 
-        .question {
-          font-size: 20px;
-          margin-bottom: 20px;
+        .option-btn:hover {
+            transform: scale(1.03);
         }
 
-        .options button {
-          display: block;
-          width: 100%;
-          margin: 10px 0;
-          padding: 15px;
-          font-size: 18px;
-          background-color: #1a1a6d;
-          border: 2px solid #00ffff;
-          color: white;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: background 0.3s;
+        .correct {
+            background: #00c853 !important;
         }
 
-        .options button:hover {
-          background-color: #00ffff;
-          color: black;
-        }
-
-        .options button.correct {
-          background-color: #00ff88;
-          border-color: #00ff88;
-          color: black;
-        }
-
-        .options button.wrong {
-          background-color: #ff4d4d;
-          border-color: #ff4d4d;
-        }
-
-        .result {
-          margin-top: 20px;
-          font-size: 22px;
-          font-weight: bold;
+        .wrong {
+            background: #d50000 !important;
         }
 
         #next-btn {
-          margin-top: 20px;
-          padding: 10px 20px;
-          font-size: 18px;
-          border-radius: 10px;
-          background-color: #00ffff;
-          color: black;
-          border: none;
-          cursor: pointer;
+            background: #0288d1;
+            display: none;
         }
     </style>
 </head>
+
 <body>
-<div class="quiz-container">
-    <h1>🎯 DSA Quiz - BY SMART CAREER NAVIGATOR</h1>
-    <div id="question-container">
-        <div class="question" id="question">Loading...</div>
-        <div class="options" id="options"></div>
-        <div class="result" id="result"></div>
-        <button id="next-btn" style="display:none;">Next Question</button>
-    </div>
+
+<h1>🎯 DSA Quiz - SMART CAREER NAVIGATOR</h1>
+
+<div id="quiz-container" class="question-box">
+    <h2 id="question">Loading...</h2>
+
+    <button class="option-btn"></button>
+    <button class="option-btn"></button>
+    <button class="option-btn"></button>
+    <button class="option-btn"></button>
+
+    <!-- ⭐ NEXT BUTTON HERE (IMPORTANT) -->
+    <button id="next-btn" class="option-btn">Next</button>
 </div>
 
 <script>
-    let questions = [];
-    let currentQuestion = 0;
-    let score = 0;
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
 
-    async function loadQuestions() {
-      try {
-        const response = await fetch("http://localhost:8080/api/generate-questions");
+async function loadQuestions() {
+    try {
+        const response = await fetch("https://smartcareernav.onrender.com/api/quiz/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ topic: "DSA", difficulty: "easy" })
+        });
 
-        // Pehle raw text leke console me print karte hain
-        const rawData = await response.text();
-        console.log("Raw response:", rawData);
+        const data = await response.json();
+        console.log("Questions Loaded:", data);
 
-        // Ab try karte hain JSON parse karne ka
-        let data;
-        try {
-          data = JSON.parse(rawData);
-        } catch (parseErr) {
-          throw new Error("Invalid JSON format: " + parseErr.message);
-        }
+        questions = Object.keys(data).map(k => ({
+            question: data[k].question,
+            options: data[k].options,
+            answer: data[k].answer   // Answer TEXT
+        }));
 
-        // Check karo data valid array hai ya nahi
-        if (!Array.isArray(data)) {
-          throw new Error("Invalid data structure: expected an array");
-        }
-
-        questions = data;
-        currentQuestion = 0;
-        score = 0;
         showQuestion();
-      } catch (err) {
-        console.error("Failed to load questions:", err);
-        document.getElementById("question").innerText =
-          "⚠️ Questions load karne mein problem hui. Console check karo.";
-        document.getElementById("options").innerHTML = "";
-        document.getElementById("result").innerText = "";
-        document.getElementById("next-btn").style.display = "none";
-      }
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("question").innerText = "❌ Error loading questions.";
     }
+}
 
-    function showQuestion() {
-      document.getElementById("result").innerText = "";
-      document.getElementById("next-btn").style.display = "none";
+function showQuestion() {
+    const q = questions[currentQuestion];
 
-      const q = questions[currentQuestion];
-      document.getElementById("question").innerText = `Q${currentQuestion + 1}. ${q.question}`;
+    document.getElementById("question").innerText =
+        `Q${currentQuestion + 1}. ${q.question}`;
 
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
+    const buttons = document.querySelectorAll(".option-btn");
+    const nextBtn = document.getElementById("next-btn");
 
-      q.options.forEach((opt, index) => {
-        const btn = document.createElement("button");
-        btn.innerText = opt;
-        btn.disabled = false; // Make sure buttons are enabled
-        btn.onclick = () => checkAnswer(index, btn);
-        optionsDiv.appendChild(btn);
-      });
-    }
+    nextBtn.style.display = "none";
 
-    function checkAnswer(selectedIndex, btn) {
-      const correctIndex = questions[currentQuestion].answer;
-      const result = document.getElementById("result");
-      const allButtons = document.querySelectorAll("#options button");
-
-      // Disable all options after answer
-      allButtons.forEach(b => (b.disabled = true));
-
-      if (selectedIndex === correctIndex) {
-        btn.classList.add("correct");
-        result.innerText = "✅ Correct!";
-        score++;
-      } else {
-        btn.classList.add("wrong");
-        allButtons[correctIndex].classList.add("correct");
-        result.innerText = `❌ Wrong! Correct answer: ${questions[currentQuestion].options[correctIndex]}`;
-      }
-
-      // Show next button
-      document.getElementById("next-btn").style.display = "inline-block";
-    }
-
-    document.getElementById("next-btn").addEventListener("click", () => {
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        showQuestion();
-      } else {
-        // Quiz complete - show final score
-        document.getElementById("question").innerText = "🎉 Quiz Finished!";
-        document.getElementById("options").innerHTML = "";
-        document.getElementById("next-btn").style.display = "none";
-        document.getElementById("result").innerText = `✅ Your Score: ${score} / ${questions.length}`;
-      }
+    buttons.forEach((btn, index) => {
+        if (btn.id !== "next-btn") {
+            btn.classList.remove("correct", "wrong");
+            btn.innerText = q.options[index];
+            btn.onclick = () => checkAnswer(btn, q.options[index], q.answer);
+        }
     });
+}
 
-    window.onload = function () {
-      loadQuestions();
+function checkAnswer(btn, selected, correct) {
+    const buttons = document.querySelectorAll(".option-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    buttons.forEach(b => b.onclick = null);
+
+    if (selected === correct) {
+        btn.classList.add("correct");
+        score++;
+    } else {
+        btn.classList.add("wrong");
+        buttons.forEach(b => {
+            if (b.innerText === correct) b.classList.add("correct");
+        });
+    }
+
+    nextBtn.style.display = "block";
+
+    nextBtn.onclick = () => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            finishQuiz();
+        }
     };
+}
+
+function finishQuiz() {
+    document.getElementById("quiz-container").innerHTML = `
+        <h2>🎉 Quiz Completed</h2>
+        <h3>Your Score: ${score} / ${questions.length}</h3>
+        <button class="option-btn" onclick="location.reload()">Restart</button>
+    `;
+}
+
+loadQuestions();
 </script>
 
 </body>

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
 
@@ -18,26 +16,32 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    // ✅ LOGIN
     public String login(String email, String password) throws Exception {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                // generate token
-                return jwtUtil.generateToken(email);
-            } else {
-                throw new Exception("Invalid password");
-            }
-        } else {
-            throw new Exception("User not found");
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new Exception("Invalid password");
         }
+
+        // ✅ JWT Token return
+        return jwtUtil.generateToken(email);
     }
 
-    public User register(User user) {
-        // Hash password before saving
+    // ✅ REGISTER
+    public User register(User user) throws Exception {
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new Exception("Email already registered!");
+        }
+
+        // ✅ Hash password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 }

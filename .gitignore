@@ -1,1 +1,10 @@
 target/ 
+# Ignore database directories
+db/
+mysql/
+data/
+*.sock
+*.cnf
+*.pid
+*.log
+
